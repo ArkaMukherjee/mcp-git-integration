@@ -14,6 +14,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+# Add this permissions block
+permissions:
+  contents: write
+
 jobs:
   build:
 
