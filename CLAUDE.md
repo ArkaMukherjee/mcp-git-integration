@@ -48,9 +48,9 @@ mvn dependency:tree
 
 2. **Install GitHub MCP Server**: The application expects `@github/mcp-server` npm package to be installed globally or locally:
    ```bash
-   npm install -g @github/mcp-server
+   npm install -g @modelcontextprotocol/server-github
    # OR in project directory
-   npm install @github/mcp-server
+   npm install -g @modelcontextprotocol/server-github
    ```
 
 3. **Start Application**: 

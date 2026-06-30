@@ -1,8 +1,6 @@
 package com.github.mcp.client.config;
 
 import io.modelcontextprotocol.client.McpSyncClient;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +9,10 @@ import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +64,7 @@ public class McpConfiguration {
      * The ChatClient will automatically use MCP tools when processing prompts.
      */
     @Bean
-    public ChatClient chatClient(ChatClient.Builder builder, ToolCallbackProvider toolCallbackProvider) {
+    public ChatClient chatClient(ChatClient.Builder builder) {
         return builder
                 .defaultTools(toolCallbackProvider)
                 .build();
@@ -76,7 +76,7 @@ public class McpConfiguration {
      * `toolCallbackProvider` bean) so it won't run too early.
      */
     @EventListener(ApplicationReadyEvent.class)
-    public void onApplicationReady(ApplicationReadyEvent event) {
+    public void onApplicationReady() {
         if (toolCallbackProvider == null) {
             log.warn("Tool callback provider is null, waiting for initialization...");
             return;
